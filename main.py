@@ -1,15 +1,21 @@
-# from dotenv import load_dotenv
-# load_dotenv()
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
+from langchain.llms import CTransformers
 
-chat_model = ChatOpenAI()
 
-st.title('인공지능 시인')
 
-content = st.text_input('시의 주제를 제시해주세요.')
+# llm = ChatOpenAI()
+llm = CTransformers(
+    model = 'llama-2-7b-chat.ggmlv3.q2_K.bin',
+    model_type='llama'
+)
 
-if st.button('시 작성 요청하기'):
-    with st.spinner('시 작성 중...'):
-        result = chat_model.predict(content + "에 대한 시를 써줘")
+
+st.title('인공지능 백과사전')
+
+content = st.text_input('주제를 제시해주세요.')
+
+if st.button('정보 작성 요청하기'):
+    with st.spinner('정보 작성 중...'):
+        result = llm.predict(content + "search for this word")
         st.write(result)
